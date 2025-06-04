@@ -33,25 +33,9 @@ A PHP-based app to test Flux Kontext AI editing model, through Replicate
 
 1. Clone the repository
 2. Configure your web server to point to the project directory
-3. Set up the database and update configuration in `config/config.php` using `config.example.php`
+3. Set up configuration in `config/config.php` using `config.example.php` (keys and login/password especially)
 4. Ensure the `uploads` directory is writable by the web server
 5. Access the application through your web browser
 
-## Security
 
-- Session-based authentication
-- Protected file inclusion
-- Input validation and sanitization
-- Secure password handling
-
-## Development
-
-The application uses a modular structure with separate components for different functionalities. The main entry point is `index.php`, which handles routing and page loading based on user requests.
-
-## License
-
-[Add your license information here]
-
-## Contributing
-
-[Add contribution guidelines here]
+Vibe coded with Cursor
