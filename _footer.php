@@ -2,7 +2,7 @@
     </main>
 
     <footer>
-        <p>&copy; <?php echo date("Y"); ?> Kontext - All rights reserved.</p>
+        <p>&copy; <?php echo date("Y"); ?> Kontext - No rights reserved, so just use it as you want.</p>
     </footer>
 
     <!-- Modal Structure (shared or page-specific as needed) -->
