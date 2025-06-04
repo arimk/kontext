@@ -356,6 +356,7 @@ section {
     align-self: flex-start;
     border: 1px solid #e9e9e9;
     border-bottom-left-radius: 5px;
+    position: relative; /* Needed for absolute positioning of retry icon */
 }
 #conversational-editing-page .bot-message img {
     max-width: 100%;
@@ -925,4 +926,26 @@ footer {
 #conversational-editing-page .chat-input-area.dragover-active {
     border: 2px dashed #000; /* Example: dashed black border */
     background-color: #f0f0f0; /* Example: light grey background */
+}
+
+.retry-icon {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.2s, background 0.2s;
+    z-index: 2;
+    border: 1px solid #e0e0e0;
+}
+
+.retry-icon:hover {
+    background: #f0f0f0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 } 

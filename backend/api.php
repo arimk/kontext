@@ -66,6 +66,7 @@ switch ($action) {
         $userText = trim($input['text'] ?? '');
         $imageContext = $input['image_context'] ?? null; // Can be base64 data URI or a direct URL
         $aspectRatio = $input['aspectRatio'] ?? '1:1';
+        $isRetry = $input['is_retry'] ?? false;
 
         $botResponseText = "";
         $botImageUrl = null;
@@ -115,9 +116,9 @@ switch ($action) {
                 $botResponseText = "Using your uploaded image. ";
 
             } elseif (filter_var($imageContext, FILTER_VALIDATE_URL)) {
-                // It's a direct URL (from a previous bot generation)
+                // It's a direct URL (from a previous bot generation or retry)
                 $inputImageUrlForReplicate = $imageContext;
-                $botResponseText = "Using the last generated image. ";
+                $botResponseText = $isRetry ? "Retrying with the same image. " : "Using the last generated image. ";
             } else {
                 // Invalid image_context format
                 $botResponseText = "Received an invalid image format. ";
@@ -145,7 +146,7 @@ switch ($action) {
                 error_log("Replicate Error in Chat: " . $replicateResponse['error'] . " for prompt: " . $userText . " with image context: " . $inputImageUrlForReplicate);
             } elseif (isset($replicateResponse['output_url'])) {
                 $botImageUrl = $replicateResponse['output_url'];
-                $botResponseText .= "Here's the image based on your request: \"$userText\"";
+                $botResponseText .= $isRetry ? "Here's another attempt based on your request: \"$userText\"" : "Here's the image based on your request: \"$userText\"";
             } else {
                 $botResponseText .= "Sorry, I couldn't generate an image due to an unexpected issue.";
                 error_log("Replicate unexpected response in Chat for prompt '{$userText}' with image context '{$inputImageUrlForReplicate}': " . print_r($replicateResponse, true));
@@ -158,7 +159,7 @@ switch ($action) {
 
         // Cleanup temporary file if one was created
         if ($tempUploadedFilePath && file_exists($tempUploadedFilePath)) {
-             unlink($tempUploadedFilePath);
+            unlink($tempUploadedFilePath);
         }
 
         echo json_encode([
