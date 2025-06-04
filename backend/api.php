@@ -158,7 +158,7 @@ switch ($action) {
 
         // Cleanup temporary file if one was created
         if ($tempUploadedFilePath && file_exists($tempUploadedFilePath)) {
-            // unlink($tempUploadedFilePath); // Uncomment to enable cleanup
+             unlink($tempUploadedFilePath);
         }
 
         echo json_encode([
