@@ -18,6 +18,11 @@ $currentPage = $_GET['page'] ?? 'home'; // Default to 'home' if no page is speci
         <div class="header-content">
             <div class="logo-and-tabs">
                 <a href="index.php?page=home" class="logo">Kontext</a>
+                <button class="hamburger-menu" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <nav class="main-nav">
                     <a href="index.php?page=home" class="tab-link <?php echo ($currentPage === 'home') ? 'active' : ''; ?>">Home</a>
                     <a href="index.php?page=ad_brainstormer" class="tab-link <?php echo ($currentPage === 'ad_brainstormer') ? 'active' : ''; ?>">Ad Brainstormer</a>
