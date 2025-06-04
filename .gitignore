@@ -1,0 +1,20 @@
+# Ignore configuration files containing sensitive data
+config/config.php
+
+# Ignore uploaded files
+uploads/*
+!uploads/.htaccess
+
+# Ignore common development environment files
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore editor specific files
+.idea/
+.vscode/
+*.swp
+*.swo

@@ -1,0 +1,928 @@
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-header {
+    background: #fff;
+    color: #333;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    height: 64px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.logo-and-tabs {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #000;
+    text-decoration: none;
+    margin-right: 40px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.tab-link {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0 16px;
+    margin-right: 8px;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+}
+.tab-link:last-child {
+    margin-right: 0;
+}
+
+.tab-link:hover {
+    color: #000;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.tab-link.active {
+    color: #000;
+    font-weight: 600;
+    border-bottom: 3px solid #000;
+}
+
+.user-area {
+    display: flex;
+    align-items: center;
+}
+
+.user-area .welcome-user {
+    color: #555;
+    margin-right: 16px;
+    font-size: 0.9em;
+}
+
+.user-area .logout-link {
+    color: #d9534f;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+.user-area .logout-link:hover {
+    text-decoration: underline;
+}
+
+main {
+    flex-grow: 1;
+    width: 100%;
+}
+
+section {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    color: #333;
+    
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input[type="file"],
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.65rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group input[type="file"]:focus,
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #000;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Login and Register Page Specifics */
+.auth-form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.auth-form-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #000;
+}
+.auth-form-container .form-group {
+    margin-bottom: 1.2rem;
+}
+.auth-form-container button[type="submit"] {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+.auth-form-container p {
+    text-align: center;
+    margin-top: 1rem;
+}
+.auth-form-container p a {
+    color: #000;
+    font-weight: 500;
+    text-decoration: underline;
+}
+.auth-form-container p a:hover {
+    text-decoration: none;
+}
+
+/* Ad Brainstormer specific styles */
+#ad-brainstormer-page .prompt-input-group {
+    margin: 0.25rem;
+}
+
+#ad-brainstormer-page .image-card-actions button {
+    margin: 0.25rem;
+}
+
+/* Conversational Editing specific styles */
+#conversational-editing-page .chat-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    min-height: 450px;
+    max-height: 700px;
+    background-color: #ffffff;
+}
+
+#conversational-editing-page .chat-input-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.03);
+    margin-top: 10px;
+}
+
+#conversational-editing-page #chatAttachImageButton {
+    background-color: #f0f1f3;
+    color: #333333;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+}
+#conversational-editing-page #chatAttachImageButton:hover {
+    background-color: #e2e3e5;
+}
+#conversational-editing-page #chatAttachImageButton svg {
+    display: block;
+}
+
+#conversational-editing-page #chatTextInput {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 0.25rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    min-height: 38px;
+    box-sizing: border-box;
+    resize: none;
+    outline: none;
+}
+
+#conversational-editing-page #chatAspectRatio {
+    background-color: #f0f1f3;
+    color: #333333;
+    border: none;
+    border-radius: 6px;
+    padding: 0.35rem 2rem 0.35rem 0.75rem;
+    height: 38px;
+    line-height: normal;
+    font-family: inherit;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    min-width: auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='%23333333' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 11L2 5h12L8 11z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    background-size: 10px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+#conversational-editing-page #chatAspectRatio:hover {
+    background-color: #e2e3e5;
+}
+
+#conversational-editing-page #chatAspectRatio option {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 8px 12px; /* Note: padding on options has inconsistent browser support */
+}
+
+#conversational-editing-page #chatSendButton {
+    /* Reverting to standard button styles, relying on .btn-primary */
+    /* Remove properties that made it circular and icon-specific: */
+    /* width, height, border-radius: 50%, display: flex, align-items, justify-content, padding: 0 */
+    /* background-color and color will come from .btn-primary */
+    flex-shrink: 0; /* Keep this as it's in a flex container */
+    /* Padding and border-radius will come from general button styles or .btn-primary */
+}
+#conversational-editing-page #chatSendButton:hover {
+    /* Hover effect will come from .btn-primary:hover */
+    /* background-color: #1f2327; */ /* Example: remove if .btn-primary:hover is sufficient */
+}
+
+/* Remove all SVG specific styles for the send button */
+/*
+#conversational-editing-page #chatSendButton svg {
+    display: block;
+    fill: #ffffff;
+    width: 18px;
+    height: 18px;
+}
+#conversational-editing-page #chatSendButton svg path:nth-child(1) {
+    fill: none !important;
+}
+#conversational-editing-page #chatSendButton svg path:nth-child(2) {
+    fill: #ffffff !important;
+}
+*/
+
+#conversational-editing-page .chat-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+#conversational-editing-page .message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+#conversational-editing-page .message p {
+    margin: 0;
+    padding: 0;
+}
+
+#conversational-editing-page .user-message {
+    background-color: #c2c2c2;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+#conversational-editing-page .bot-message {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+    border: 1px solid #e9e9e9;
+    border-bottom-left-radius: 5px;
+}
+#conversational-editing-page .bot-message img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+#conversational-editing-page #chatStartOverButton {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
+#conversational-editing-page #chatStartOverButton:hover {
+    background-color: #f0f0f0;
+    color: #000;
+    border-color: #000;
+}
+
+#ad-brainstormer-page, #home-page, #conversational-editing-page {
+    color: #333;
+}
+#ad-brainstormer-page h2, #home-page h2, #conversational-editing-page h2 {
+    color: #333;
+    margin-top: 0;
+}
+
+/* Typing indicator style */
+#conversational-editing-page .typing-indicator p {
+    font-style: italic;
+    color: #777;
+}
+
+/* General Modal Styles (can be shared) */
+.image-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    padding-top: 50px; /* Location of the box - content will center below this */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    /* Flex properties for centering content */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center children horizontally */
+    justify-content: center; /* Center children vertically */
+}
+
+.image-modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80vh; /* Max height relative to viewport height */
+    object-fit: contain; /* Ensure image aspect ratio is maintained */
+}
+
+/* Caption of Modal Image (if used) */
+#chatModalCaption, #modalCaption { /* Shared style for caption */
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 50px; /* Give it some space */
+}
+
+/* Close Button */
+.image-modal-close-button {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.image-modal-close-button:hover,
+.image-modal-close-button:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Specific to chat images to make them clickable */
+#conversational-editing-page .message img {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+#conversational-editing-page .message img:hover {
+    opacity: 0.8;
+}
+
+/* Ad Brainstormer specific modal elements (if any unique styles are needed) */
+/* #imageModal {} */
+/* #modalImage {} */
+
+/* Chat specific modal elements (if any unique styles are needed) */
+/* #chatImageModal {} */
+/* #chatModalImage {} */
+
+/* --- General Button Styling --- */
+button, .button-link {
+    display: inline-block;
+    padding: 0.65rem 1.3rem;
+    border: 1px solid #000;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    line-height: 1.4;
+    box-sizing: border-box;
+}
+
+/* Default/Secondary Button Style */
+button, .button-link, .btn-secondary {
+    background-color: #fff;
+    color: #000;
+    border-color: #000;
+}
+
+button:hover, .button-link:hover, .btn-secondary:hover {
+    background-color: #f0f0f0;
+    color: #000;
+    border-color: #000;
+}
+
+/* Primary Button Style (e.g., Generate, Send) */
+.btn-primary {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+/* Danger/Destructive Button Style (e.g., Start Over, Logout) */
+.btn-danger {
+    background-color: #fff;
+    color: #d9534f;
+    border-color: #d9534f;
+}
+.btn-danger:hover {
+    background-color: #d9534f;
+    color: #fff;
+    border-color: #d9534f;
+}
+
+/* Small Button Modifier */
+.btn-small {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+}
+
+/* New styles for chat footer controls */
+#conversational-editing-page .chat-footer-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between dropdown and button */
+    padding: 10px 12px; /* Adjust padding as needed */
+    border-top: 1px solid #e0e0e0;
+    background-color: #f8f9fa; /* Light background for the controls bar */
+}
+
+#conversational-editing-page #chatStartOverButton {
+    /* .btn-secondary is applied via HTML. 
+       Adjust padding if needed to match select height better, or rely on global .btn-secondary */
+    /* e.g., padding-top: 0.55rem; padding-bottom: 0.55rem; */
+}
+#conversational-editing-page #chatAspectRatio {
+    padding: 0.55rem 1.3rem; /* Adjust to visually match button height */
+}
+
+/* New styles for top bar controls in chat */
+#conversational-editing-page .chat-top-bar-controls {
+    display: flex;
+    justify-content: flex-end; /* Pushes button to the right */
+    padding: 8px 12px; /* Add some padding */
+    border-bottom: 1px solid #e0e0e0; /* Optional: a light separator */
+    background-color: #f8f9fa; /* Optional: slight background differentiation */
+}
+
+#conversational-editing-page .chat-messages {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+    align-items: center; /* Vertically align items in the input area */
+    gap: 8px; /* Add space between items */
+}
+
+#conversational-editing-page #chatTextInput {
+    margin-right: 8px; /* Keep existing margin or rely on gap */
+}
+
+#conversational-editing-page #chatSendButton {
+    padding: 10px 20px; /* Keep specific padding for Send button */
+    border-radius: 20px; /* Keep rounded style for Send button */
+}
+
+/* Remove styles for chat-footer-controls as it's no longer used */
+/*
+#conversational-editing-page .chat-footer-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    padding: 10px 12px; 
+    border-top: 1px solid #e0e0e0;
+    background-color: #f8f9fa; 
+}
+*/
+
+#conversational-editing-page #chatStartOverButton {
+    /* .btn-secondary is applied via HTML.
+       Adjust padding if needed, e.g., if it looks too big in the top bar.
+       Example: padding: 0.4rem 0.8rem; font-size: 0.85rem; */
+}
+
+/* New wrapper for the H2 and the Start Over button */
+#conversational-editing-page .page-header-flex {
+    display: flex;
+    justify-content: space-between; /* Pushes h2 left, button right */
+    align-items: center; /* Vertically aligns them */
+    margin-bottom: 0.5rem; /* Space below this header line, adjust as needed */
+}
+
+#conversational-editing-page .page-header-flex h2 {
+    margin-bottom: 0; /* Remove default h2 margin if it interferes */
+}
+
+/* Chat Container - holds messages and input area */
+#conversational-editing-page .chat-container {
+    background-color: #ffffff; /* Keep chat container white for clarity */
+    /* Remove border from chat-container if chat-input-area has its own */
+}
+
+/* Remove styles for chat-top-bar-controls as it's no longer used */
+/*
+#conversational-editing-page .chat-top-bar-controls {
+    display: flex;
+    justify-content: flex-end; 
+    padding: 8px 12px; 
+    border-bottom: 1px solid #e0e0e0; 
+    background-color: #f8f9fa; 
+}
+*/
+
+#conversational-editing-page .chat-messages {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+    align-items: center; /* Vertically align items in the input area */
+    gap: 8px; /* Add space between items */
+}
+
+#conversational-editing-page #chatTextInput {
+    margin-right: 8px; /* Keep existing margin or rely on gap */
+}
+
+#conversational-editing-page #chatSendButton {
+    padding: 10px 20px; /* Keep specific padding for Send button */
+    border-radius: 20px; /* Keep rounded style for Send button */
+}
+
+/* Styles for the custom drop zone */
+.drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    position: relative; /* For positioning elements inside if needed */
+    min-height: 100px; /* Give it some initial height */
+    display: flex; /* To help center prompt or image */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.drop-zone.dragover {
+    background-color: #e9e9e9;
+    border-color: #aaa;
+}
+
+.drop-zone-prompt {
+    color: #777;
+    font-size: 0.95rem;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 200px; /* Adjust as needed */
+    margin-top: 15px;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+/* Ensure the actual file input remains hidden if JS doesn't hide it fast enough or fails */
+#imageUpload {
+    display: none !important;
+}
+
+/* Loading Indicators - General Styles */
+.loading-indicator-container { /* A general container for loading messages */
+    text-align: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: #555;
+}
+.loading-indicator-container p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Ad Brainstormer Specific - Image Grid and Items */
+/* #ad-brainstormer-page #resultsArea remains specific if needed */
+
+.image-grid { 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.image-item { 
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.image-item:hover { 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.image-item.image-item-failed { /* Style for failed items */
+    border-left: 3px solid #d9534f; /* Example: red left border */
+}
+
+.image-item .prompt-text { 
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    height: 4.2em; /* Approx 3 lines, adjust as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* For multi-line ellipsis (webkit only, but good fallback) */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.image-item .image-container { 
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f1f3; /* Placeholder background */
+    border-radius: 6px;
+    min-height: 200px; /* Ensure a minimum height */
+    overflow: hidden; /* Ensure image fits */
+}
+
+.image-item img { 
+    max-width: 100%;
+    max-height: 100%; /* Ensure image scales within container */
+    height: auto; /* Maintain aspect ratio */
+    width: auto;  /* Maintain aspect ratio */
+    object-fit: contain; 
+    border-radius: 4px;
+    cursor: pointer;
+    display: block; /* Remove extra space below image */
+}
+
+.image-item .individual-loader { 
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #555; /* Darker grey for spinner */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+.image-item .error-text { 
+    color: #d9534f;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.image-item .error-text-detail { 
+    color: #777;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 0.25rem;
+}
+
+.image-item .retry-button { 
+    background-color: #f0f1f3;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.image-item .retry-button:hover { /* REMOVED #ad-brainstormer-page */
+    background-color: #e0e2e5;
+}
+
+/* General Modal Styles (ensure these are present and not overly specific) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000; /* High z-index to be on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.85); /* Darker overlay */
+    padding-top: 30px; /* Space from top */
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 85%;
+    max-height: 85vh; /* Limit height relative to viewport */
+    border-radius: 4px;
+}
+
+#caption {
+    margin: 15px auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Animation for modal content (optional) */
+.modal-content, #caption {
+    animation-name: zoom;
+    animation-duration: 0.4s;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes zoom {
+    from {transform:scale(0.8)}
+    to {transform:scale(1)}
+}
+
+/* Conversational Editing Page Specific Loading Indicator (if different) */
+/* You had this before, keeping it in case it was intentional for this page */
+#conversational-editing-page .loading-indicator {
+    text-align: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    margin-top: 10px;
+}
+
+#conversational-editing-page .loading-indicator p {
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    text-align: center;
+}
+
+/* Multi Image Page Specific Styles */
+#multi-image-page .multi-image-dropzones {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid for dropzones */
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#multi-image-page .multi-drop-zone-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#multi-image-page .multi-drop-zone {
+    width: 100%;
+    min-height: 120px; /* Adjust as needed */
+    padding: 15px; /* Smaller padding for smaller zones */
+    font-size: 0.9em;
+}
+
+#multi-image-page .multi-image-preview {
+    max-height: 100px; /* Max height for previews in the smaller dropzones */
+}
+
+#multi-image-page .clear-image-btn {
+    margin-top: 0.5rem;
+}
+
+#multiCaption {
+    margin: 15px auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Style for chat input area when dragging a file over it */
+#conversational-editing-page .chat-input-area.dragover-active {
+    border: 2px dashed #000; /* Example: dashed black border */
+    background-color: #f0f0f0; /* Example: light grey background */
+} 
