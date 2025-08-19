@@ -1013,4 +1013,50 @@ footer {
 .retry-icon:hover {
     background: #f0f0f0;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.action-icons-container {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+    z-index: 2;
+}
+
+.edit-icon {
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.2s, background 0.2s;
+    border: 1px solid #e0e0e0;
+}
+
+.edit-icon:hover {
+    background: #f0f0f0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* Update retry icon to work with the new container */
+.action-icons-container .retry-icon {
+    position: static;
+    right: auto;
+    bottom: auto;
+}
+
+/* Edit icon positioning for user messages */
+#conversational-editing-page .user-message {
+    position: relative;
+    padding-right: 35px; /* Make room for the edit icon */
+}
+
+#conversational-editing-page .user-message .edit-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
 } 

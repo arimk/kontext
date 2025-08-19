@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to add a message to the chat window
     function addMessage(text, type, imageUrl = null, meta = null) {
-        if (!text && !imageUrl) return; // Don't add empty messages unless it's an image-only message
+        if (!text && !imageUrl) return null; // Don't add empty messages unless it's an image-only message
 
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', `${type}-message`);
@@ -31,6 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
             messageDiv.dataset.prompt = meta.text || '';
             messageDiv.dataset.imageContext = meta.imageUrl || '';
             messageDiv.dataset.aspectRatio = meta.aspectRatio || '';
+        }
+
+        // Store parameters for user messages that will generate images
+        if (type === 'user' && text) {
+            // We'll set these parameters when the message is actually sent
+            messageDiv.dataset.prompt = text;
+            // Don't add edit icon here - we'll add it after parameters are set
         }
 
         if (text) {
@@ -51,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messageDiv.appendChild(img);
 
             // Add retry icon for bot messages with images
-            if (type === 'bot') {
+            if (type === 'bot' && imageUrl) {
                 const retryIcon = document.createElement('span');
                 retryIcon.classList.add('retry-icon');
                 retryIcon.title = 'Retry';
@@ -64,10 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
                 messageDiv.appendChild(retryIcon);
             }
+
+
         }
 
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+        return messageDiv;
     }
 
     // --- Chat Image Modal Logic ---
@@ -163,7 +173,30 @@ document.addEventListener('DOMContentLoaded', () => {
         // (e.g., "What would you like to do with this image?")
 
         if (text) {
-            addMessage(text, 'user');
+            const userMessageDiv = addMessage(text, 'user');
+            // Set the parameters on the user message for potential editing
+            if (userMessageDiv) {
+                userMessageDiv.dataset.imageContext = imageContextForNextTurn || '';
+                userMessageDiv.dataset.aspectRatio = chatAspectRatio ? chatAspectRatio.value : '1:1';
+                userMessageDiv.dataset.model = chatModelSelect ? chatModelSelect.value : 'black-forest-labs/flux-kontext-pro';
+
+                
+                // Add edit icon to the user message
+                const editIcon = document.createElement('span');
+                editIcon.classList.add('edit-icon');
+                editIcon.title = 'Edit Prompt';
+                editIcon.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                `;
+                editIcon.onclick = (e) => {
+                    e.stopPropagation();
+                    handleEditPrompt(userMessageDiv);
+                };
+                userMessageDiv.appendChild(editIcon);
+            }
         }
         // User-uploaded image is added to UI when selected.
 
@@ -289,6 +322,191 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error retrying:', error);
             addMessage('Sorry, something went wrong while retrying.', 'bot');
         }
+    }
+
+    // Function to handle editing prompt
+    function handleEditPrompt(userMessageDiv) {
+        const originalPrompt = userMessageDiv.dataset.prompt || '';
+        const imageContext = userMessageDiv.dataset.imageContext || '';
+        const originalAspectRatio = userMessageDiv.dataset.aspectRatio || (chatAspectRatio ? chatAspectRatio.value : '1:1');
+        const originalModel = userMessageDiv.dataset.model || (chatModelSelect ? chatModelSelect.value : 'black-forest-labs/flux-kontext-pro');
+
+        // Create edit modal
+        const editModal = document.createElement('div');
+        editModal.id = 'editPromptModal';
+        editModal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        `;
+
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        `;
+
+        modalContent.innerHTML = `
+            <h3 style="margin-top: 0;">Edit Prompt</h3>
+            <div style="margin-bottom: 15px;">
+                <label for="editPromptText" style="display: block; margin-bottom: 5px; font-weight: bold;">Prompt:</label>
+                <textarea id="editPromptText" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;">${originalPrompt}</textarea>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="editAspectRatio" style="display: block; margin-bottom: 5px; font-weight: bold;">Aspect Ratio:</label>
+                <select id="editAspectRatio" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="match_input_image" ${originalAspectRatio === 'match_input_image' ? 'selected' : ''}>Match input (or 1:1)</option>
+                    <option value="4:3" ${originalAspectRatio === '4:3' ? 'selected' : ''}>4:3</option>
+                    <option value="16:9" ${originalAspectRatio === '16:9' ? 'selected' : ''}>16:9</option>
+                    <option value="9:16" ${originalAspectRatio === '9:16' ? 'selected' : ''}>9:16</option>
+                    <option value="3:4" ${originalAspectRatio === '3:4' ? 'selected' : ''}>3:4</option>
+                    <option value="3:2" ${originalAspectRatio === '3:2' ? 'selected' : ''}>3:2</option>
+                    <option value="2:3" ${originalAspectRatio === '2:3' ? 'selected' : ''}>2:3</option>
+                    <option value="4:5" ${originalAspectRatio === '4:5' ? 'selected' : ''}>4:5</option>
+                    <option value="5:4" ${originalAspectRatio === '5:4' ? 'selected' : ''}>5:4</option>
+                    <option value="21:9" ${originalAspectRatio === '21:9' ? 'selected' : ''}>21:9</option>
+                    <option value="9:21" ${originalAspectRatio === '9:21' ? 'selected' : ''}>9:21</option>
+                    <option value="2:1" ${originalAspectRatio === '2:1' ? 'selected' : ''}>2:1</option>
+                    <option value="1:2" ${originalAspectRatio === '1:2' ? 'selected' : ''}>1:2</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="editModelSelect" style="display: block; margin-bottom: 5px; font-weight: bold;">Model:</label>
+                <select id="editModelSelect" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    ${Array.from(chatModelSelect.options).map(option => 
+                        `<option value="${option.value}" ${option.value === originalModel ? 'selected' : ''}>${option.text}</option>`
+                    ).join('')}
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button id="editCancelButton" style="padding: 8px 16px; border: 1px solid #ccc; background: #f5f5f5; border-radius: 4px; cursor: pointer;">Cancel</button>
+                <button id="editApplyButton" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Apply & Regenerate</button>
+            </div>
+        `;
+
+        editModal.appendChild(modalContent);
+        document.body.appendChild(editModal);
+
+        // Focus on the textarea
+        const editPromptText = document.getElementById('editPromptText');
+        editPromptText.focus();
+        editPromptText.select();
+
+        // Handle cancel
+        document.getElementById('editCancelButton').onclick = () => {
+            document.body.removeChild(editModal);
+        };
+
+        // Handle apply
+        document.getElementById('editApplyButton').onclick = async () => {
+            const newPrompt = editPromptText.value.trim();
+            const newAspectRatio = document.getElementById('editAspectRatio').value;
+            const newModel = document.getElementById('editModelSelect').value;
+
+            if (!newPrompt) {
+                alert('Please enter a prompt.');
+                return;
+            }
+
+            // Remove the modal
+            document.body.removeChild(editModal);
+
+            // Update the user message text
+            const textNode = userMessageDiv.querySelector('p');
+            if (textNode) {
+                textNode.textContent = newPrompt;
+            }
+
+            // Update the stored parameters
+            userMessageDiv.dataset.prompt = newPrompt;
+            userMessageDiv.dataset.aspectRatio = newAspectRatio;
+            userMessageDiv.dataset.model = newModel;
+
+            // Remove the previous bot response (the next message after this user message)
+            const nextMessage = userMessageDiv.nextElementSibling;
+            if (nextMessage && nextMessage.classList.contains('bot-message')) {
+                nextMessage.remove();
+            }
+
+            // Show typing indicator
+            showBotTypingIndicator(true);
+
+            try {
+                const payload = {
+                    action: 'chat_message',
+                    text: newPrompt,
+                    image_context: imageContext,
+                    aspectRatio: newAspectRatio,
+                    model: newModel,
+                    is_edit: true
+                };
+
+                const response = await fetch('backend/api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                showBotTypingIndicator(false);
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ message: 'Network response was not ok.' }));
+                    addMessage(`Error: ${errorData.message || response.statusText}`, 'bot');
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    addMessage(data.botText, 'bot', data.botImageUrl || null, {
+                        text: newPrompt,
+                        imageUrl: imageContext,
+                        aspectRatio: newAspectRatio
+                    });
+                    if (data.botImageUrl) {
+                        lastBotImageUrl = data.botImageUrl;
+                    }
+                } else {
+                    addMessage(`API Error: ${data.message || 'Unknown error'}`, 'bot');
+                }
+
+            } catch (error) {
+                showBotTypingIndicator(false);
+                console.error('Error editing prompt:', error);
+                addMessage('Sorry, something went wrong while editing the prompt.', 'bot');
+            }
+        };
+
+        // Handle escape key
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                document.body.removeChild(editModal);
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
+
+        // Handle clicking outside modal
+        editModal.onclick = (e) => {
+            if (e.target === editModal) {
+                document.body.removeChild(editModal);
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
     }
 
     // Show/hide bot typing indicator

@@ -67,6 +67,7 @@ switch ($action) {
         $imageContext = $input['image_context'] ?? null; // Can be base64 data URI or a direct URL
         $aspectRatio = $input['aspectRatio'] ?? '1:1';
         $isRetry = $input['is_retry'] ?? false;
+        $isEdit = $input['is_edit'] ?? false;
 
         $botResponseText = "";
         $botImageUrl = null;
@@ -148,7 +149,13 @@ switch ($action) {
                 error_log("Replicate Error in Chat: " . $replicateResponse['error'] . " for prompt: " . $userText . " with image context: " . $inputImageUrlForReplicate);
             } elseif (isset($replicateResponse['output_url'])) {
                 $botImageUrl = $replicateResponse['output_url'];
-                $botResponseText .= $isRetry ? "Here's another attempt based on your request: \"$userText\"" : "Here's the image based on your request: \"$userText\"";
+                if ($isRetry) {
+                    $botResponseText .= "Here's another attempt based on your request: \"$userText\"";
+                } elseif ($isEdit) {
+                    $botResponseText .= "Here's the regenerated image with your edited prompt: \"$userText\"";
+                } else {
+                    $botResponseText .= "Here's the image based on your request: \"$userText\"";
+                }
             } else {
                 $botResponseText .= "Sorry, I couldn't generate an image due to an unexpected issue.";
                 error_log("Replicate unexpected response in Chat for prompt '{$userText}' with image context '{$inputImageUrlForReplicate}': " . print_r($replicateResponse, true));
