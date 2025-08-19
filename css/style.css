@@ -20,6 +20,7 @@ body {
     border-bottom: 1px solid #e0e0e0;
     height: 64px;
     position: relative;
+    overflow: visible;
 }
 
 .header-content {
@@ -27,7 +28,9 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .logo-and-tabs {
@@ -40,13 +43,14 @@ body {
     font-weight: 700;
     color: #000;
     text-decoration: none;
-    margin-right: 40px;
+    margin-right: 30px;
 }
 
 .main-nav {
     display: flex;
     align-items: center;
     height: 100%;
+    position: relative;
 }
 
 .hamburger-menu {
@@ -75,6 +79,15 @@ body {
         display: flex;
     }
 
+    /* Ensure mobile navigation is properly contained */
+    .main-nav.active {
+        display: flex;
+        padding-bottom: 2rem;
+        min-height: fit-content;
+        height: auto;
+        max-height: none;
+    }
+
     .main-nav {
         position: absolute;
         top: 64px;
@@ -87,10 +100,15 @@ body {
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         display: none;
         z-index: 1000;
+        min-height: auto;
+        max-height: none;
+        overflow: visible;
+        height: auto;
     }
 
     .main-nav.active {
         display: flex;
+        padding-bottom: 0.5rem;
     }
 
     .tab-link {
@@ -98,6 +116,8 @@ body {
         padding: 1rem;
         margin: 0;
         border-bottom: 1px solid #e0e0e0;
+        margin-bottom: 10px;
+        }
     }
 
     .tab-link:last-child {
@@ -111,17 +131,138 @@ body {
     .user-area {
         margin-left: auto;
     }
+
+    /* Chat input responsive design */
+    #conversational-editing-page .chat-input-area {
+        flex-direction: column;
+    }
+
+    #conversational-editing-page .chat-input-main-row {
+        width: 100%;
+    }
+
+    #conversational-editing-page .chat-input-options-row {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #conversational-editing-page #chatAspectRatio,
+    #conversational-editing-page #chatModelSelect {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+/* Desktop styles - show options in main row for larger screens */
+@media (min-width: 769px) {
+    /* Reset mobile navigation styles for desktop */
+    .hamburger-menu {
+        display: none !important;
+    }
+
+    .main-nav {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        background: transparent !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        display: flex !important;
+        z-index: auto !important;
+        min-height: auto !important;
+    }
+    #conversational-editing-page .chat-input-area {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #conversational-editing-page .chat-input-main-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+    }
+
+    #conversational-editing-page .chat-input-options-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    #conversational-editing-page #chatAspectRatio,
+    #conversational-editing-page #chatModelSelect {
+        min-width: 140px;
+    }
+
+    /* Desktop navigation styles */
+    .main-nav {
+        height: auto;
+        max-height: 64px;
+        overflow: visible;
+        flex-wrap: wrap;
+        position: static;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        flex-direction: row;
+        display: flex;
+    }
+
+    .tab-link {
+        white-space: nowrap;
+        overflow: visible;
+        width: auto;
+        padding: 0 12px;
+        margin-right: 6px;
+        border-bottom: 3px solid transparent;        
+        margin-bottom: -1px;
+    }
+
+    /* Ensure all navigation items are visible */
+    .logo-and-tabs {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .main-nav {
+        flex: 1;
+        min-width: 0;
+        justify-content: flex-start;
+    }
+}
+
+/* Medium screen adjustments for navigation */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .header-content {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .logo {
+        margin-right: 20px;
+    }
+    
+    .tab-link {
+        padding: 0 8px;
+        margin-right: 4px;
+        font-size: 0.85em;
+        margin-bottom: -1px;
+    }
 }
 
 .tab-link {
     background-color: transparent;
     border: none;
     border-radius: 0;
-    padding: 0 16px;
-    margin-right: 8px;
+    padding: 0 12px;
+    margin-right: 6px;
     color: #555;
     text-decoration: none;
-    font-size: 0.95em;
+    font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
@@ -129,7 +270,7 @@ body {
     align-items: center;
     height: 100%;
     border-bottom: 3px solid transparent;
-    margin-bottom: -1px;
+    white-space: nowrap;
 }
 .tab-link:last-child {
     margin-right: 0;
@@ -280,7 +421,7 @@ section {
 
 #conversational-editing-page .chat-input-area {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 8px;
     padding: 8px;
     background-color: #ffffff;
@@ -288,6 +429,21 @@ section {
     border-radius: 12px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.03);
     margin-top: 10px;
+}
+
+#conversational-editing-page .chat-input-main-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+#conversational-editing-page .chat-input-options-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 #conversational-editing-page #chatAttachImageButton {
@@ -357,6 +513,41 @@ section {
     background-color: #ffffff;
     color: #333333;
     padding: 8px 12px; /* Note: padding on options has inconsistent browser support */
+}
+
+#conversational-editing-page #chatModelSelect {
+    background-color: #f0f1f3;
+    color: #333333;
+    border: none;
+    border-radius: 6px;
+    padding: 0.35rem 2rem 0.35rem 0.75rem;
+    height: 38px;
+    line-height: normal;
+    font-family: inherit;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    min-width: auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='%23333333' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 11L2 5h12L8 11z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    background-size: 10px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+#conversational-editing-page #chatModelSelect:hover {
+    background-color: #e2e3e5;
+}
+
+#conversational-editing-page #chatModelSelect option {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 8px 12px;
 }
 
 #conversational-editing-page #chatSendButton {
