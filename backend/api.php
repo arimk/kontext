@@ -37,30 +37,7 @@ if (!$action) {
 }
 
 switch ($action) {
-    case 'generate_ad_ideas':
-        // ... (existing code for ad ideas) ...
-        // For brevity, assuming existing ad idea generation logic is here
-        // Ensure it also returns JSON
-        $prompt = $input['prompt'] ?? '';
-        $image_data_url = $input['image_data_url'] ?? '';
-        $aspect_ratio = $input['aspect_ratio'] ?? '1:1';
-        $num_outputs = $input['num_outputs'] ?? 4;
-        $session_id = $input['session_id'] ?? uniqid('session_'); // Manage session for pagination
 
-        // Simulate API call to an image generation service
-        $mock_results = [];
-        for ($i = 0; $i < $num_outputs; $i++) {
-            $mock_results[] = [
-                'id' => uniqid(),
-                'prompt_text' => "Simulated ad idea for: " . substr($prompt, 0, 30) . "... #" . ($i + 1),
-                'image_url' => "https://picsum.photos/seed/" . uniqid() . "/300/200?aspect_ratio=" . $aspect_ratio,
-                'alt_text' => "Simulated ad image " . ($i + 1)
-            ];
-        }
-        // Simulate delay
-        sleep(1);
-        echo json_encode(['status' => 'success', 'ideas' => $mock_results, 'session_id' => $session_id]);
-        break;
 
     case 'chat_message':
         $userText = trim($input['text'] ?? '');
