@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropZonesContainer = document.getElementById('multiImageDropZonesContainer');
     const directionTextMulti = document.getElementById('directionTextMulti');
     const aspectRatioMulti = document.getElementById('aspectRatioMulti');
+    const modelSelectMulti = document.getElementById('modelSelectMulti');
     const createMultiImageButton = document.getElementById('createMultiImageButton');
     const formLoadingIndicatorMulti = document.getElementById('formLoadingIndicatorMulti');
     const resultsAreaMulti = document.getElementById('resultsAreaMulti');
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('numImages', activeFiles.length.toString());
         formData.append('directionText', directionTextMulti.value);
         formData.append('aspectRatio', aspectRatioMulti.value);
+        formData.append('model', modelSelectMulti.value);
 
         try {
             const response = await fetch('backend/api.php', {

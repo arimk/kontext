@@ -46,6 +46,17 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="modelSelectMulti">AI Model:</label>
+                <select id="modelSelectMulti" name="modelSelectMulti">
+                    <?php foreach ($REPLICATE_MODELS as $modelId => $modelName): ?>
+                        <option value="<?php echo htmlspecialchars($modelId); ?>" <?php echo ($modelId === DEFAULT_REPLICATE_MODEL) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($modelName); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
             <button type="submit" id="createMultiImageButton" class="btn-primary">Generate with Combined Images</button>
         </form>
 

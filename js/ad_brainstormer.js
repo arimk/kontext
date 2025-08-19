@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const imagePreview = document.getElementById('imagePreview');
     const directionText = document.getElementById('directionText');
     const aspectRatio = document.getElementById('aspectRatio');
+    const modelSelect = document.getElementById('modelSelect');
     const createButton = document.getElementById('createButton');
     const formLoadingIndicator = document.getElementById('formLoadingIndicator');
     const gridLoadingIndicator = document.getElementById('gridLoadingIndicator');
@@ -116,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('imageUpload', uploadedFile);
         }
         formData.append('directionText', directionText.value);
+        formData.append('model', modelSelect.value);
         // Aspect ratio is sent with each image generation request now,
         // but we can keep sending it here if OpenAIHandler might use it for context.
         // formData.append('aspectRatio', aspectRatio.value); 
@@ -219,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('prompt', promptText);
         formData.append('originalUploadedImagePublicUrl', currentUploadedImagePublicUrl);
         formData.append('aspectRatio', currentAspectRatio);
+        formData.append('model', modelSelect.value);
 
         try {
             const response = await fetch('backend/api.php', {

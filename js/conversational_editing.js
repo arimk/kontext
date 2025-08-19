@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatImageUpload = document.getElementById('chatImageUpload');
     const chatStartOverButton = document.getElementById('chatStartOverButton');
     const chatAspectRatio = document.getElementById('chatAspectRatio'); // Get aspect ratio dropdown
+    const chatModelSelect = document.getElementById('chatModelSelect'); // Get model selection dropdown
     const chatInputArea = document.querySelector('.chat-input-area'); // Get the chat input area
 
     // Modal elements for chat images
@@ -176,7 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 action: 'chat_message',
                 text: text || '', // Send empty string if no text but there's an image context
                 image_context: imageContextForNextTurn, // Can be base64 data URI or a URL
-                aspectRatio: chatAspectRatio ? chatAspectRatio.value : '1:1'
+                aspectRatio: chatAspectRatio ? chatAspectRatio.value : '1:1',
+                model: chatModelSelect ? chatModelSelect.value : 'black-forest-labs/flux-kontext-pro'
             };
 
             const response = await fetch('backend/api.php', {
@@ -247,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 text: prompt,
                 image_context: imageContext,
                 aspectRatio: aspectRatio,
+                model: chatModelSelect ? chatModelSelect.value : 'black-forest-labs/flux-kontext-pro',
                 is_retry: true
             };
 

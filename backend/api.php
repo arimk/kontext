@@ -137,7 +137,9 @@ switch ($action) {
             $originalExecutionTime = ini_get('max_execution_time');
             set_time_limit(300);
 
-            $replicateResponse = $replicateHandler->generateImage($userText, $aspectRatio, $inputImageUrlForReplicate);
+            // Get the selected model from the request, default to the configured default
+            $selectedModel = $input['model'] ?? DEFAULT_REPLICATE_MODEL;
+            $replicateResponse = $replicateHandler->generateImage($userText, $aspectRatio, $inputImageUrlForReplicate, $selectedModel);
             
             set_time_limit($originalExecutionTime);
 
@@ -281,6 +283,9 @@ switch ($action) {
             $generatedImageUrls = [];
             $generationErrors = [];
 
+            // Get the selected model from the request, default to the configured default
+            $selectedModel = $_POST['model'] ?? DEFAULT_REPLICATE_MODEL;
+
             $originalExecutionTime = ini_get('max_execution_time');
             // Set time limit for the whole loop of Replicate calls
             // Each Replicate call might take up to 5 mins, so 4 * 5 = 20 mins, plus buffer
@@ -293,7 +298,7 @@ switch ($action) {
                 // We'll use the same prompt for now unless model requires variation hints.
                 $currentPrompt = $userPrompt; 
 
-                $replicateResponse = $replicateHandler->generateImage($currentPrompt, $outputAspectRatioString, $publicCombinedImageUrl);
+                $replicateResponse = $replicateHandler->generateImage($currentPrompt, $outputAspectRatioString, $publicCombinedImageUrl, $selectedModel);
 
                 if (isset($replicateResponse['error'])) {
                     $generationErrors[] = "Variation " . ($i + 1) . ": " . $replicateResponse['error'];
@@ -484,11 +489,14 @@ function handleGenerateSingleImage() {
     // --- 2. Replicate Call for Image ---
     $replicateHandler = new ReplicateHandler(REPLICATE_API_TOKEN);
     
+    // Get the selected model from the request, default to the configured default
+    $selectedModel = $_POST['model'] ?? DEFAULT_REPLICATE_MODEL;
+    
     // Set higher execution time for Replicate calls
     $originalExecutionTime = ini_get('max_execution_time');
     set_time_limit(300); // 5 minutes
 
-    $imageData = $replicateHandler->generateImage($prompt, $aspectRatio, $originalUploadedImagePublicUrl);
+    $imageData = $replicateHandler->generateImage($prompt, $aspectRatio, $originalUploadedImagePublicUrl, $selectedModel);
     
     set_time_limit($originalExecutionTime); // Restore
 

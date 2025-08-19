@@ -39,6 +39,17 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="modelSelect">AI Model:</label>
+                <select id="modelSelect" name="modelSelect">
+                    <?php foreach ($REPLICATE_MODELS as $modelId => $modelName): ?>
+                        <option value="<?php echo htmlspecialchars($modelId); ?>" <?php echo ($modelId === DEFAULT_REPLICATE_MODEL) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($modelName); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
             <button type="submit" id="createButton" class="btn-primary">Create Ads</button>
         </form>
 

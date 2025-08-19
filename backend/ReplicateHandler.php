@@ -2,14 +2,22 @@
 
 class ReplicateHandler {
     private $apiToken;
-    private $apiUrl;
+    private $baseUrl;
 
     public function __construct($apiToken) {
         $this->apiToken = $apiToken;
-        $this->apiUrl = REPLICATE_API_URL; // From config.php
+        $this->baseUrl = REPLICATE_BASE_URL; // From config.php
     }
 
-    public function generateImage($prompt, $aspectRatio, $inputImageUrl) {
+    public function generateImage($prompt, $aspectRatio, $inputImageUrl, $model = null) {
+        // Use default model if none specified
+        if ($model === null) {
+            $model = DEFAULT_REPLICATE_MODEL;
+        }
+        
+        // Construct the full API URL for the specific model
+        $apiUrl = $this->baseUrl . $model . '/predictions';
+        
         // Initialize the input array for the payload
         $payloadInput = [
             'prompt' => $prompt,
@@ -29,7 +37,7 @@ class ReplicateHandler {
         // Construct the final payload
         $payload = ['input' => $payloadInput];
 
-        $ch = curl_init($this->apiUrl);
+        $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));

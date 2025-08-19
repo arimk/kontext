@@ -36,6 +36,13 @@
                     <option value="2:1">2:1</option>
                     <option value="1:2">1:2</option>
                 </select>
+                <select id="chatModelSelect" name="chatModelSelect" title="AI Model for image generation">
+                    <?php foreach ($REPLICATE_MODELS as $modelId => $modelName): ?>
+                        <option value="<?php echo htmlspecialchars($modelId); ?>" <?php echo ($modelId === DEFAULT_REPLICATE_MODEL) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($modelName); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
                 <button id="chatSendButton" class="btn-primary" title="Send">Send</button>
             </div>
         </div>

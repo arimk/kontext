@@ -14,9 +14,20 @@ define('OPENAI_API_URL', 'https://api.openai.com/v1/chat/completions');
 // OpenAI Model (Vision-capable model recommended)
 define('OPENAI_MODEL', 'gpt-4o'); // Or 'gpt-4-vision-preview', or other suitable vision model
 
-// Replicate API Endpoint for the specific model
-// Ensure this is defined in your actual config.php for Replicate to work
-define('REPLICATE_API_URL', 'https://api.replicate.com/v1/models/black-forest-labs/flux-kontext-pro/predictions');
+// Replicate API Base URL (without specific model)
+define('REPLICATE_BASE_URL', 'https://api.replicate.com/v1/models/');
+
+// Available Replicate Models - Add your preferred models here
+// Format: 'model_identifier' => 'Display Name'
+$REPLICATE_MODELS = [
+    'black-forest-labs/flux-kontext-pro' => 'Flux Kontext Pro',
+    'black-forest-labs/flux-kontext-max' => 'Flux Kontext Max',
+    'qwen/qwen-image-edit' => 'Qwen Image Edit',
+    // Add more models as needed
+];
+
+// Default model to use if none is selected
+define('DEFAULT_REPLICATE_MODEL', 'black-forest-labs/flux-kontext-pro');
 
 // Define a username and password for basic authentication
 define('LOGIN_USER', 'admin'); // Change this
