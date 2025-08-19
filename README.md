@@ -1,6 +1,6 @@
 # Kontext
 
-A PHP-based app to test Flux Kontext AI editing model, through Replicate
+A PHP-based app to test AI image editing models like Flux Kontext or Qwen Edit, through Replicate
 
 ## Features
 
@@ -33,7 +33,7 @@ A PHP-based app to test Flux Kontext AI editing model, through Replicate
 
 1. Clone the repository
 2. Configure your web server to point to the project directory
-3. Set up configuration in `config/config.php` using `config.example.php` (keys and login/password especially)
+3. Set up configuration in `config/config.php` using `config.example.php` (models, keys and login/password especially)
 4. Ensure the `uploads` directory is writable by the web server
 5. Access the application through your web browser
 
