@@ -37,9 +37,9 @@
                     <option value="1:2">1:2</option>
                 </select>
                 <select id="chatModelSelect" name="chatModelSelect" title="AI Model for image generation">
-                    <?php foreach ($REPLICATE_MODELS as $modelId => $modelName): ?>
+                    <?php foreach ($REPLICATE_MODELS as $modelId => $modelConfig): ?>
                         <option value="<?php echo htmlspecialchars($modelId); ?>" <?php echo ($modelId === DEFAULT_REPLICATE_MODEL) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($modelName); ?>
+                            <?php echo htmlspecialchars($modelConfig['display_name']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

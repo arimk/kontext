@@ -17,13 +17,27 @@ define('OPENAI_MODEL', 'gpt-4o'); // Or 'gpt-4-vision-preview', or other suitabl
 // Replicate API Base URL (without specific model)
 define('REPLICATE_BASE_URL', 'https://api.replicate.com/v1/models/');
 
-// Available Replicate Models - Add your preferred models here
-// Format: 'model_identifier' => 'Display Name'
+// Available Replicate Models with their configurations
+// Format: 'model_identifier' => ['display_name' => 'Display Name', 'image_param' => 'parameter_name', 'defaults' => [...]]
 $REPLICATE_MODELS = [
-    'black-forest-labs/flux-kontext-pro' => 'Flux Kontext Pro',
-    'black-forest-labs/flux-kontext-max' => 'Flux Kontext Max',
-    'qwen/qwen-image-edit' => 'Qwen Image Edit',
-    // Add more models as needed
+    'black-forest-labs/flux-kontext-pro' => [
+        'display_name' => 'Flux Kontext Pro',
+        'image_param' => 'input_image',
+        'defaults' => []
+    ],
+    'black-forest-labs/flux-kontext-max' => [
+        'display_name' => 'Flux Kontext Max',
+        'image_param' => 'input_image',
+        'defaults' => []
+    ],
+    'qwen/qwen-image-edit' => [
+        'display_name' => 'Qwen Image Edit',
+        'image_param' => 'image',
+        'defaults' => [
+            'go_fast' => false,
+            'output_format' => 'jpg'
+        ]
+    ],
 ];
 
 // Default model to use if none is selected

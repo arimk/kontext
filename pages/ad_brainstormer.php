@@ -42,9 +42,9 @@
             <div class="form-group">
                 <label for="modelSelect">AI Model:</label>
                 <select id="modelSelect" name="modelSelect">
-                    <?php foreach ($REPLICATE_MODELS as $modelId => $modelName): ?>
+                    <?php foreach ($REPLICATE_MODELS as $modelId => $modelConfig): ?>
                         <option value="<?php echo htmlspecialchars($modelId); ?>" <?php echo ($modelId === DEFAULT_REPLICATE_MODEL) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($modelName); ?>
+                            <?php echo htmlspecialchars($modelConfig['display_name']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

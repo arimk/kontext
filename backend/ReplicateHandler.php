@@ -15,23 +15,28 @@ class ReplicateHandler {
             $model = DEFAULT_REPLICATE_MODEL;
         }
         
+        // Get model configuration
+        if (!isset($GLOBALS['REPLICATE_MODELS'][$model])) {
+            return ['error' => 'Unknown model: ' . $model];
+        }
+        
+        $modelConfig = $GLOBALS['REPLICATE_MODELS'][$model];
+        $imageParam = $modelConfig['image_param'];
+        $defaults = $modelConfig['defaults'];
+        
         // Construct the full API URL for the specific model
         $apiUrl = $this->baseUrl . $model . '/predictions';
         
-        // Initialize the input array for the payload
-        $payloadInput = [
+        // Initialize the input array for the payload with model defaults
+        $payloadInput = array_merge($defaults, [
             'prompt' => $prompt,
-            // Assuming the Replicate model pointed to by REPLICATE_API_URL
-            // directly accepts 'aspect_ratio' as a string (e.g., "16:9").
-            // If it requires width and height, that logic would need to be here.
             'aspect_ratio' => $aspectRatio,
-        ];
+        ]);
 
-        // Conditionally add input_image if a valid URL is provided
+        // Conditionally add input image if a valid URL is provided
         if (!empty($inputImageUrl) && filter_var($inputImageUrl, FILTER_VALIDATE_URL)) {
-            // The key 'input_image' should match what your specific Replicate model expects.
-            // It could be 'image', 'init_image', etc.
-            $payloadInput['input_image'] = $inputImageUrl;
+            // Use the model-specific image parameter name
+            $payloadInput[$imageParam] = $inputImageUrl;
         }
 
         // Construct the final payload
